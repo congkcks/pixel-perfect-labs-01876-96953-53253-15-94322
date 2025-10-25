@@ -6,12 +6,11 @@ const Sidebar = () => {
   const location = useLocation();
 
   const menuItems = [
-    { icon: BookOpen, label: "BÀI HỌC", path: "/lesson-list" },
-    { icon: TrendingUp, label: "TIẾN ĐỘ", path: "/progress" },
-    { icon: Headphones, label: "LUYỆN NGHE", path: "/listening-practice" },
-    { icon: FileText, label: "LUYỆN ĐỀ", path: "/test-list" },
-    { icon: BookMarked, label: "NGỮ PHÁP", path: "/grammar-practice" },
-    { icon: BookOpen, label: "TỪ VỰNG", path: "/vocabulary-topics" },
+    { icon: FileText, label: "BÀI VIẾT", path: "/create-lesson" },
+    { icon: Headphones, label: "BÀI NGHE", path: "/listening-practice" },
+    { icon: BookMarked, label: "TỪ VỰNG", path: "/flashcard-groups" },
+    { icon: BookOpen, label: "NGỮ PHÁP", path: "/grammar-practice" },
+    { icon: TrendingUp, label: "LUYỆN ĐỀ", path: "/test-list" },
     { icon: User, label: "HỒ SƠ", path: "/profile" },
   ];
 

@@ -17,13 +17,27 @@ const Index = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <Link to="/create-lesson" className="group">
+            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-success/5 to-success/10 border-success/20">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-4 bg-success/10 rounded-full group-hover:bg-success/20 transition-colors">
+                  <FileText className="w-12 h-12 text-success" />
+                </div>
+                <h2 className="text-2xl font-bold">Bài Viết</h2>
+                <p className="text-muted-foreground">
+                  Tạo và quản lý bài viết học tập
+                </p>
+              </div>
+            </Card>
+          </Link>
+
           <Link to="/listening-practice" className="group">
             <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="p-4 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
                   <Headphones className="w-12 h-12 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold">Luyện Nghe</h2>
+                <h2 className="text-2xl font-bold">Bài Nghe</h2>
                 <p className="text-muted-foreground">
                   Thực hành nghe với audio, transcript và dịch nghĩa
                 </p>
@@ -31,29 +45,29 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/lesson-list" className="group">
-            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-success/5 to-success/10 border-success/20">
+          <Link to="/flashcard-groups" className="group">
+            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-info/5 to-info/10 border-info/20">
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="p-4 bg-success/10 rounded-full group-hover:bg-success/20 transition-colors">
-                  <BookOpen className="w-12 h-12 text-success" />
+                <div className="p-4 bg-info/10 rounded-full group-hover:bg-info/20 transition-colors">
+                  <BookMarked className="w-12 h-12 text-info" />
                 </div>
-                <h2 className="text-2xl font-bold">Danh Sách Bài</h2>
+                <h2 className="text-2xl font-bold">Từ Vựng</h2>
                 <p className="text-muted-foreground">
-                  Duyệt và chọn bài học phù hợp với trình độ
+                  Học từ vựng với flashcard và trò chơi
                 </p>
               </div>
             </Card>
           </Link>
 
-          <Link to="/conversation-practice" className="group">
+          <Link to="/grammar-practice" className="group">
             <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-purple/5 to-purple/10 border-purple/20">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="p-4 bg-purple/10 rounded-full group-hover:bg-purple/20 transition-colors">
-                  <MessageCircle className="w-12 h-12 text-purple" />
+                  <BookOpen className="w-12 h-12 text-purple" />
                 </div>
-                <h2 className="text-2xl font-bold">Luyện Hội Thoại</h2>
+                <h2 className="text-2xl font-bold">Ngữ Pháp</h2>
                 <p className="text-muted-foreground">
-                  Thực hành đối thoại với trợ lý AI thông minh
+                  Luyện tập ngữ pháp với các bài tập tương tác
                 </p>
               </div>
             </Card>
@@ -63,25 +77,11 @@ const Index = () => {
             <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-warning/5 to-warning/10 border-warning/20">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="p-4 bg-warning/10 rounded-full group-hover:bg-warning/20 transition-colors">
-                  <FileText className="w-12 h-12 text-warning" />
+                  <Plus className="w-12 h-12 text-warning" />
                 </div>
                 <h2 className="text-2xl font-bold">Luyện Đề</h2>
                 <p className="text-muted-foreground">
                   Luyện tập với các đề thi TOEIC thật
-                </p>
-              </div>
-            </Card>
-          </Link>
-
-          <Link to="/vocabulary-topics" className="group">
-            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-info/5 to-info/10 border-info/20">
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="p-4 bg-info/10 rounded-full group-hover:bg-info/20 transition-colors">
-                  <BookMarked className="w-12 h-12 text-info" />
-                </div>
-                <h2 className="text-2xl font-bold">Từ Vựng</h2>
-                <p className="text-muted-foreground">
-                  Học từ vựng với flashcard và trò chơi
                 </p>
               </div>
             </Card>
