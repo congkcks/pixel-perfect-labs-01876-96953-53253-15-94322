@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { X, Play, Pause, RotateCcw, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTestDetail, TestQuestion } from "@/hooks/useTestDetail";
@@ -149,18 +149,6 @@ const TestExam = () => {
               {/* Audio Player */}
               {currentQuestion.audioUrl && (
                 <div className="mb-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Button size="icon" variant="default" className="rounded-full">
-                      <Play className="w-5 h-5" />
-                    </Button>
-                    <Button size="icon" variant="outline" className="rounded-full">
-                      <Pause className="w-5 h-5" />
-                    </Button>
-                    <Button size="icon" variant="outline" className="rounded-full">
-                      <RotateCcw className="w-5 h-5" />
-                    </Button>
-                  </div>
-                  
                   <iframe
                     src={convertGoogleDriveUrl(currentQuestion.audioUrl) || ''}
                     className="w-full h-16 border rounded-lg"
