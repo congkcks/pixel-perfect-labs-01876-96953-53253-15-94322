@@ -244,5 +244,6 @@ export const useListeningLesson = ({
     skipSentence,
     playAudio,
     revealAnswer,
+    hasCheckedCurrentQuestion: !!showResult,
   };
 };

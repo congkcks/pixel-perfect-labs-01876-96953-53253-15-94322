@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { X, Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Flag, Settings } from "lucide-react";
+import { X, Play, Pause, RotateCcw, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTestDetail, TestQuestion } from "@/hooks/useTestDetail";
@@ -125,15 +125,9 @@ const TestExam = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon">
-              <Flag className="w-5 h-5" />
-            </Button>
             <div className="bg-destructive text-white px-4 py-2 rounded-lg font-mono font-semibold">
               {formatTime(timeLeft)}
             </div>
-            <Button variant="ghost" size="icon">
-              <Settings className="w-5 h-5" />
-            </Button>
           </div>
         </div>
       </div>
@@ -197,16 +191,19 @@ const TestExam = () => {
             <div className="flex items-center justify-center gap-4">
               <Button
                 variant="outline"
+                onClick={() => navigate("/")}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Trang chủ
+              </Button>
+              
+              <Button
+                variant="outline"
                 onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
                 disabled={currentQuestionIndex === 0}
               >
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Câu trước
-              </Button>
-              
-              <Button variant="ghost">
-                <Flag className="w-4 h-4 mr-2" />
-                Đáp án
               </Button>
 
               <Button

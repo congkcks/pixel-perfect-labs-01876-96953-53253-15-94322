@@ -117,10 +117,16 @@ const FlashcardPractice = () => {
       <div className="bg-card border-b shadow-sm">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" onClick={() => navigate(-1)}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Quay lại
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" onClick={() => navigate("/")}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Trang chủ
+              </Button>
+              <Button variant="ghost" onClick={() => navigate(-1)}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Quay lại
+              </Button>
+            </div>
             <h1 className="text-xl font-bold">{groupName}</h1>
             <div className="text-sm text-muted-foreground">
               {currentIndex + 1} / {words.length}

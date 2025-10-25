@@ -38,6 +38,7 @@ const ListeningPracticeLesson = () => {
     previousSentence,
     skipSentence,
     revealAnswer,
+    hasCheckedCurrentQuestion,
   } = useListeningLesson({ lessonId });
 
   if (loading) {
@@ -101,14 +102,22 @@ const ListeningPracticeLesson = () => {
 
       <div className="px-6 py-6">
         <div className="max-w-7xl mx-auto">
-          <Button 
-            variant="destructive" 
-            className="mb-6"
-            onClick={() => navigate("/listening-practice")}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Quay lại
-          </Button>
+          <div className="flex gap-3 mb-6">
+            <Button 
+              variant="outline"
+              onClick={() => navigate("/")}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Trang chủ
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={() => navigate("/listening-practice")}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Quay lại
+            </Button>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr,480px] gap-6">
             {/* Left Column */}
@@ -309,7 +318,7 @@ const ListeningPracticeLesson = () => {
                 {!showTranslation ? (
                   <div className="space-y-3">
                     {lesson.sentences.map((sentence, idx) => {
-                      const isRevealed = idx <= currentIndex;
+                      const isRevealed = idx < currentIndex || (idx === currentIndex && hasCheckedCurrentQuestion);
                       return (
                         <div key={sentence.sentenceId}>
                           {isRevealed ? (
@@ -340,7 +349,7 @@ const ListeningPracticeLesson = () => {
                 ) : (
                   <div className="space-y-3">
                     {lesson.sentences.map((sentence, idx) => {
-                      const isRevealed = idx <= currentIndex;
+                      const isRevealed = idx < currentIndex || (idx === currentIndex && hasCheckedCurrentQuestion);
                       return (
                         <div key={sentence.sentenceId}>
                           {isRevealed ? (
