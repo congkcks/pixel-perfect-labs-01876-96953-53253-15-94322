@@ -3,7 +3,15 @@ import { ReadingLesson, ReadingConfig } from '@/types/reading';
 import { toast } from '@/hooks/use-toast';
 
 export const useReadingPractice = () => {
-  const [lesson, setLesson] = useState<ReadingLesson | null>(null);
+  const initialLesson = (() => {
+    try {
+      const raw = sessionStorage.getItem('reading_lesson');
+      return raw ? (JSON.parse(raw) as ReadingLesson) : null;
+    } catch {
+      return null;
+    }
+  })();
+  const [lesson, setLesson] = useState<ReadingLesson | null>(initialLesson);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<number, string | boolean>>({});
@@ -38,6 +46,7 @@ export const useReadingPractice = () => {
       // Parse cleaned JSON
       const data = JSON.parse(textData);
       setLesson(data);
+      sessionStorage.setItem('reading_lesson', JSON.stringify(data));
       setCurrentStep(0);
       setUserAnswers({});
       setShowResults(false);
