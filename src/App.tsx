@@ -22,6 +22,8 @@ import GrammarPractice from "./pages/GrammarPractice";
 import TestList from "./pages/TestList";
 import TestConfiguration from "./pages/TestConfiguration";
 import TestExam from "./pages/TestExam";
+import ReadingConfiguration from "./pages/ReadingConfiguration";
+import ReadingPractice from "./pages/ReadingPractice";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +54,8 @@ const App = () => (
           <Route path="/test-list" element={<TestList />} />
           <Route path="/test-config/:testId" element={<TestConfiguration />} />
           <Route path="/test-exam/:testId" element={<TestExam />} />
+          <Route path="/reading-config" element={<ReadingConfiguration />} />
+          <Route path="/reading-practice" element={<ReadingPractice />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

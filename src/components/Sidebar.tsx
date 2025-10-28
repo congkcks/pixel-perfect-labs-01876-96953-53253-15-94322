@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, TrendingUp, Headphones, FileText, BookMarked, User } from "lucide-react";
+import { BookOpen, TrendingUp, Headphones, FileText, BookMarked, User, BookText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
@@ -8,6 +8,7 @@ const Sidebar = () => {
   const menuItems = [
     { icon: FileText, label: "BÀI VIẾT", path: "/create-lesson" },
     { icon: Headphones, label: "BÀI NGHE", path: "/listening-practice" },
+    { icon: BookText, label: "LUYỆN ĐỌC", path: "/reading-config" },
     { icon: BookMarked, label: "TỪ VỰNG", path: "/flashcard-groups" },
     { icon: BookOpen, label: "NGỮ PHÁP", path: "/grammar-practice" },
     { icon: TrendingUp, label: "LUYỆN ĐỀ", path: "/test-list" },

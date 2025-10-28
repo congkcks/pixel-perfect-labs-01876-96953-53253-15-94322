@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Headphones, MessageCircle, Plus, BookOpen, FileText, BookMarked } from "lucide-react";
+import { Headphones, MessageCircle, Plus, BookOpen, FileText, BookMarked, BookText } from "lucide-react";
 
 const Index = () => {
   return (
@@ -82,6 +82,20 @@ const Index = () => {
                 <h2 className="text-2xl font-bold">Luyện Nói</h2>
                 <p className="text-muted-foreground">
                   Thực hành giao tiếp với AI thông minh
+                </p>
+              </div>
+            </Card>
+          </Link>
+
+          <Link to="/reading-config" className="group">
+            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-teal-500/5 to-teal-500/10 border-teal-500/20">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-4 bg-teal-500/10 rounded-full group-hover:bg-teal-500/20 transition-colors">
+                  <BookText className="w-12 h-12 text-teal-500" />
+                </div>
+                <h2 className="text-2xl font-bold">Luyện Đọc</h2>
+                <p className="text-muted-foreground">
+                  Rèn luyện kỹ năng đọc hiểu với bài tập tương tác
                 </p>
               </div>
             </Card>
