@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Home, ChevronRight, ChevronLeft, Check, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -21,8 +22,13 @@ const ReadingPractice = () => {
     checkAnswers,
   } = useReadingPractice();
 
+  useEffect(() => {
+    if (!lesson) {
+      navigate("/reading-config");
+    }
+  }, [lesson, navigate]);
+
   if (!lesson) {
-    navigate("/reading-config");
     return null;
   }
 

@@ -24,7 +24,19 @@ export const useReadingPractice = () => {
         throw new Error('Failed to generate reading lesson');
       }
 
-      const data = await response.json();
+      // Get text response first
+      let textData = await response.text();
+      
+      // Remove markdown code blocks if present (```json ... ```)
+      textData = textData.trim();
+      if (textData.startsWith('```json')) {
+        textData = textData.replace(/^```json\s*/, '').replace(/```\s*$/, '');
+      } else if (textData.startsWith('```')) {
+        textData = textData.replace(/^```\s*/, '').replace(/```\s*$/, '');
+      }
+      
+      // Parse cleaned JSON
+      const data = JSON.parse(textData);
       setLesson(data);
       setCurrentStep(0);
       setUserAnswers({});
