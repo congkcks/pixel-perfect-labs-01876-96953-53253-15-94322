@@ -11,6 +11,7 @@ import { useToeicTestDetail } from "@/hooks/useToeicTestDetail";
 import { ToeicUserAnswer } from "@/types/toeic";
 import { Clock, ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { TextWithWordTooltip } from "@/components/TextWithWordTooltip";
 
 const ToeicTest = () => {
   const { testId } = useParams();
@@ -148,7 +149,9 @@ const ToeicTest = () => {
                     <div key={idx} className="space-y-4">
                       <div className="p-4 bg-muted rounded-lg">
                         <h3 className="font-semibold mb-2">{passage.title}</h3>
-                        <p className="whitespace-pre-wrap text-sm">{passage.passageText}</p>
+                        <div className="whitespace-pre-wrap text-sm">
+                          <TextWithWordTooltip text={passage.passageText} />
+                        </div>
                       </div>
 
                       {passageQuestions.map((question) => {
@@ -159,7 +162,9 @@ const ToeicTest = () => {
                           <div key={question.questionNo} className="space-y-3 p-4 border rounded-lg">
                             <div className="flex items-start gap-2">
                               <span className="font-semibold text-primary">Câu {question.questionNo}.</span>
-                              <p className="flex-1">{question.questionText}</p>
+                              <div className="flex-1">
+                                <TextWithWordTooltip text={question.questionText} />
+                              </div>
                               {showResults && (
                                 isCorrect ? (
                                   <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
@@ -213,21 +218,25 @@ const ToeicTest = () => {
                     <div key={idx} className="space-y-4">
                       <div className="p-4 bg-muted rounded-lg">
                         <h3 className="font-semibold mb-2">{passage.title}</h3>
-                        <p className="whitespace-pre-wrap text-sm">{passage.passageText}</p>
+                        <div className="whitespace-pre-wrap text-sm">
+                          <TextWithWordTooltip text={passage.passageText} />
+                        </div>
                       </div>
                     </div>
                   ))}
 
                   {part.questions.map((question) => {
-                const isCorrect = showResults && userAnswers[question.questionNo] === question.correctOption;
-                const isIncorrect = showResults && userAnswers[question.questionNo] && userAnswers[question.questionNo] !== question.correctOption;
+                    const isCorrect = showResults && userAnswers[question.questionNo] === question.correctOption;
+                    const isIncorrect = showResults && userAnswers[question.questionNo] && userAnswers[question.questionNo] !== question.correctOption;
 
-                return (
-                  <div key={question.questionNo} className="space-y-3 p-4 border rounded-lg">
-                    <div className="flex items-start gap-2">
-                      <span className="font-semibold text-primary">Câu {question.questionNo}.</span>
-                      <p className="flex-1">{question.questionText}</p>
-                      {showResults && (
+                    return (
+                      <div key={question.questionNo} className="space-y-3 p-4 border rounded-lg">
+                        <div className="flex items-start gap-2">
+                          <span className="font-semibold text-primary">Câu {question.questionNo}.</span>
+                          <div className="flex-1">
+                            <TextWithWordTooltip text={question.questionText} />
+                          </div>
+                          {showResults && (
                         isCorrect ? (
                           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
                         ) : isIncorrect ? (
@@ -261,7 +270,7 @@ const ToeicTest = () => {
                               className="flex-1 cursor-pointer"
                             >
                               <span className="font-semibold mr-2">{option}.</span>
-                              {optionText}
+                              <TextWithWordTooltip text={optionText} />
                             </Label>
                           </div>
                         );
