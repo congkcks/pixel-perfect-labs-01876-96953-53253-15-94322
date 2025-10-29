@@ -131,16 +131,94 @@ const ToeicTest = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {part.passages.map((passage, idx) => (
-                <div key={idx} className="space-y-4">
-                  <div className="p-4 bg-muted rounded-lg">
-                    <h3 className="font-semibold mb-2">{passage.title}</h3>
-                    <p className="whitespace-pre-wrap text-sm">{passage.passageText}</p>
-                  </div>
-                </div>
-              ))}
+              {part.partNo === 6 ? (
+                // Part 6: Hiển thị passage kèm với các câu hỏi tương ứng
+                part.passages.map((passage, idx) => {
+                  // Lấy các số câu hỏi từ passageText (ví dụ: (31), (135))
+                  const questionNumbers = passage.passageText.match(/\((\d+)\)/g)?.map(match => 
+                    parseInt(match.replace(/[()]/g, ''))
+                  ) || [];
+                  
+                  // Lọc các câu hỏi thuộc passage này
+                  const passageQuestions = part.questions.filter(q => 
+                    questionNumbers.includes(q.questionNo)
+                  ).sort((a, b) => a.questionNo - b.questionNo);
 
-              {part.questions.map((question) => {
+                  return (
+                    <div key={idx} className="space-y-4">
+                      <div className="p-4 bg-muted rounded-lg">
+                        <h3 className="font-semibold mb-2">{passage.title}</h3>
+                        <p className="whitespace-pre-wrap text-sm">{passage.passageText}</p>
+                      </div>
+
+                      {passageQuestions.map((question) => {
+                        const isCorrect = showResults && userAnswers[question.questionNo] === question.correctOption;
+                        const isIncorrect = showResults && userAnswers[question.questionNo] && userAnswers[question.questionNo] !== question.correctOption;
+
+                        return (
+                          <div key={question.questionNo} className="space-y-3 p-4 border rounded-lg">
+                            <div className="flex items-start gap-2">
+                              <span className="font-semibold text-primary">Câu {question.questionNo}.</span>
+                              <p className="flex-1">{question.questionText}</p>
+                              {showResults && (
+                                isCorrect ? (
+                                  <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                                ) : isIncorrect ? (
+                                  <XCircle className="w-5 h-5 text-destructive flex-shrink-0" />
+                                ) : null
+                              )}
+                            </div>
+
+                            <RadioGroup
+                              value={userAnswers[question.questionNo] || ""}
+                              onValueChange={(value) => handleAnswerChange(question.questionNo, value)}
+                              disabled={showResults}
+                            >
+                              {["A", "B", "C", "D"].map((option) => {
+                                const optionText = question[`option${option}` as keyof typeof question] as string;
+                                const isSelected = userAnswers[question.questionNo] === option;
+                                const isCorrectAnswer = showResults && question.correctOption === option;
+                                
+                                return (
+                                  <div
+                                    key={option}
+                                    className={`flex items-center space-x-2 p-3 rounded ${
+                                      isCorrectAnswer ? "bg-green-50 border-green-200 border" :
+                                      isSelected && isIncorrect ? "bg-red-50 border-destructive border" :
+                                      ""
+                                    }`}
+                                  >
+                                    <RadioGroupItem value={option} id={`q${question.questionNo}-${option}`} />
+                                    <Label
+                                      htmlFor={`q${question.questionNo}-${option}`}
+                                      className="flex-1 cursor-pointer"
+                                    >
+                                      <span className="font-semibold mr-2">{option}.</span>
+                                      {optionText}
+                                    </Label>
+                                  </div>
+                                );
+                              })}
+                            </RadioGroup>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })
+              ) : (
+                // Part 5 và Part 7: Hiển thị passages (nếu có) và questions bình thường
+                <>
+                  {part.passages.map((passage, idx) => (
+                    <div key={idx} className="space-y-4">
+                      <div className="p-4 bg-muted rounded-lg">
+                        <h3 className="font-semibold mb-2">{passage.title}</h3>
+                        <p className="whitespace-pre-wrap text-sm">{passage.passageText}</p>
+                      </div>
+                    </div>
+                  ))}
+
+                  {part.questions.map((question) => {
                 const isCorrect = showResults && userAnswers[question.questionNo] === question.correctOption;
                 const isIncorrect = showResults && userAnswers[question.questionNo] && userAnswers[question.questionNo] !== question.correctOption;
 
@@ -189,9 +267,11 @@ const ToeicTest = () => {
                         );
                       })}
                     </RadioGroup>
-                  </div>
-                );
-              })}
+                    </div>
+                  );
+                })}
+                </>
+              )}
             </CardContent>
           </Card>
         ))}
