@@ -24,6 +24,8 @@ import TestConfiguration from "./pages/TestConfiguration";
 import TestExam from "./pages/TestExam";
 import ReadingConfiguration from "./pages/ReadingConfiguration";
 import ReadingPractice from "./pages/ReadingPractice";
+import ToeicTestList from "./pages/ToeicTestList";
+import ToeicTest from "./pages/ToeicTest";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +58,8 @@ const App = () => (
           <Route path="/test-exam/:testId" element={<TestExam />} />
           <Route path="/reading-config" element={<ReadingConfiguration />} />
           <Route path="/reading-practice" element={<ReadingPractice />} />
+          <Route path="/toeic-tests" element={<ToeicTestList />} />
+          <Route path="/toeic-test/:testId" element={<ToeicTest />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

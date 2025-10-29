@@ -101,6 +101,20 @@ const Index = () => {
             </Card>
           </Link>
 
+          <Link to="/toeic-tests" className="group">
+            <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-4 bg-blue-500/10 rounded-full group-hover:bg-blue-500/20 transition-colors">
+                  <FileText className="w-12 h-12 text-blue-500" />
+                </div>
+                <h2 className="text-2xl font-bold">Đề Thi TOEIC</h2>
+                <p className="text-muted-foreground">
+                  Luyện tập với đề thi TOEIC Reading thực tế
+                </p>
+              </div>
+            </Card>
+          </Link>
+
           <Link to="/test-list" className="group">
             <Card className="p-8 h-full hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-warning/5 to-warning/10 border-warning/20">
               <div className="flex flex-col items-center text-center space-y-4">
