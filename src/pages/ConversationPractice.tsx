@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Loader2, Volume2, BookOpen } from "lucide-react";
+import { ArrowRight, Loader2, Volume2, BookOpen, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,8 +8,10 @@ import { toast } from "sonner";
 import { AudioRecorder } from "@/components/AudioRecorder";
 import { useSpeakingPractice } from "@/hooks/useSpeakingPractice";
 import type { ConversationTopic } from "@/types/conversation";
+import { useNavigate } from "react-router-dom";
 
 const ConversationPractice = () => {
+  const navigate = useNavigate();
   const [conversation, setConversation] = useState<ConversationTopic | null>(null);
   const [currentDialogueIndex, setCurrentDialogueIndex] = useState(0);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
@@ -102,15 +104,25 @@ const ConversationPractice = () => {
 
   if (showSetup) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-6">
-        <Card className="max-w-md w-full p-8">
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="w-8 h-8 text-primary" />
+      <div className="min-h-screen bg-background p-6">
+        <div className="max-w-md mx-auto">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/")}
+            className="mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Quay lại
+          </Button>
+          
+          <Card className="w-full p-8">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="text-2xl font-bold mb-2">Luyện nói tiếng Anh</h1>
+              <p className="text-muted-foreground">Chọn chủ đề và cấp độ để bắt đầu</p>
             </div>
-            <h1 className="text-2xl font-bold mb-2">Luyện nói tiếng Anh</h1>
-            <p className="text-muted-foreground">Chọn chủ đề và cấp độ để bắt đầu</p>
-          </div>
 
           <div className="space-y-4">
             <div>
@@ -158,7 +170,8 @@ const ConversationPractice = () => {
               )}
             </Button>
           </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     );
   }

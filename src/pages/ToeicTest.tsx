@@ -95,6 +95,15 @@ const ToeicTest = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
+      <Button
+        variant="ghost"
+        onClick={() => navigate("/toeic-tests")}
+        className="mb-4"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Quay lại danh sách đề thi
+      </Button>
+      
       <div className="flex items-center justify-between sticky top-0 bg-background z-10 pb-4 border-b">
         <div className="space-y-1">
           <div className="flex items-center gap-4">
