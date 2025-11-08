@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -22,18 +22,38 @@ const CreateLesson = () => {
   const [purpose, setPurpose] = useState("communication");
   const [method, setMethod] = useState("ai");
   const [topic, setTopic] = useState("");
+  const [customTopic, setCustomTopic] = useState("");
   const [manualContent, setManualContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const topicSuggestions = [
+    "The Importance of Learning English",
+    "My favorite place to relax",
+    "Climate change and environmental protection",
+    "The role of technology in education",
+    "Work-life balance in modern society",
+    "Cultural differences and understanding"
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple/10 to-primary/10 flex items-center justify-center p-6">
-      <Card className="w-full max-w-3xl p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-purple mb-2 flex items-center justify-center gap-2">
-            <Sparkles className="w-8 h-8" />
-            Tạo bài luyện viết mới
-          </h1>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-purple/10 to-primary/10 p-6">
+      <div className="max-w-3xl mx-auto">
+        <Button
+          variant="ghost"
+          onClick={() => navigate("/")}
+          className="mb-4"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Quay lại
+        </Button>
+        
+        <Card className="w-full p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-purple mb-2 flex items-center justify-center gap-2">
+              <Sparkles className="w-8 h-8" />
+              Tạo bài luyện viết mới
+            </h1>
+          </div>
 
         <div className="space-y-6">
           {/* Language and Difficulty */}
@@ -140,12 +160,28 @@ const CreateLesson = () => {
               <label className="flex items-center gap-2 font-semibold mb-2 text-sm">
                 📚 Chủ đề
               </label>
-              <Textarea
-                placeholder="Nhập chủ đề của bạn... (ví dụ: The Importance of Learning English, My favorite place to relax)"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                className="min-h-[80px]"
-              />
+              <Select value={topic} onValueChange={setTopic}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Chọn chủ đề có sẵn hoặc tự nhập..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="custom">✍️ Tự nhập chủ đề</SelectItem>
+                  {topicSuggestions.map((suggestion, index) => (
+                    <SelectItem key={index} value={suggestion}>
+                      {suggestion}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              {topic === "custom" && (
+                <Textarea
+                  placeholder="Nhập chủ đề của bạn..."
+                  value={customTopic}
+                  onChange={(e) => setCustomTopic(e.target.value)}
+                  className="min-h-[80px] mt-3"
+                />
+              )}
             </div>
           )}
 
@@ -168,7 +204,7 @@ const CreateLesson = () => {
           <Button 
             className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground h-12 text-lg font-semibold"
             onClick={handleGenerateTopic}
-            disabled={isGenerating || (method === "ai" && !topic.trim())}
+            disabled={isGenerating || (method === "ai" && (!topic || (topic === "custom" && !customTopic.trim())))}
           >
             {isGenerating ? (
               <>
@@ -180,13 +216,16 @@ const CreateLesson = () => {
             )}
           </Button>
         </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 
   async function handleGenerateTopic() {
-    if (method === "ai" && !topic.trim()) {
-      toast.error("Vui lòng nhập chủ đề!");
+    const finalTopic = topic === "custom" ? customTopic : topic;
+    
+    if (method === "ai" && !finalTopic.trim()) {
+      toast.error("Vui lòng chọn hoặc nhập chủ đề!");
       return;
     }
 
@@ -205,7 +244,7 @@ const CreateLesson = () => {
           Language: language === "en" ? "English" : "Vietnamese",
           Level: level,
           Purpose: purposeMap[purpose as keyof typeof purposeMap],
-          Topic: method === "ai" ? topic : manualContent,
+          Topic: method === "ai" ? finalTopic : manualContent,
           CreationMode: "Practice"
         })
       });
