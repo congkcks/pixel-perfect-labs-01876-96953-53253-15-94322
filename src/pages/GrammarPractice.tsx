@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useGrammarPractice } from "@/hooks/useGrammarPractice";
-import { ChevronLeft, ChevronRight, Timer, Flag, BookOpen, ArrowLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, Timer, Flag, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const GRAMMAR_TOPICS = [

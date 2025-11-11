@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Loader2, Volume2, BookOpen, ArrowLeft } from "lucide-react";
+import { ArrowRight, Loader2, Volume2, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,17 +8,15 @@ import { toast } from "sonner";
 import { AudioRecorder } from "@/components/AudioRecorder";
 import { useSpeakingPractice } from "@/hooks/useSpeakingPractice";
 import type { ConversationTopic } from "@/types/conversation";
-import { useNavigate } from "react-router-dom";
 
 const ConversationPractice = () => {
-  const navigate = useNavigate();
   const [conversation, setConversation] = useState<ConversationTopic | null>(null);
   const [currentDialogueIndex, setCurrentDialogueIndex] = useState(0);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [showSetup, setShowSetup] = useState(true);
   const [topic, setTopic] = useState("Daily routine");
   const [level, setLevel] = useState(2);
-
+  
   const { isLoading, generateDialogue, analyzeSpeech, evaluateAnswer } = useSpeakingPractice();
 
   const handleStartPractice = async () => {
@@ -34,11 +32,11 @@ const ConversationPractice = () => {
     if (!conversation) return;
 
     const currentDialogue = conversation.dialogue[currentDialogueIndex];
-
+    
     // Phân biệt câu hỏi mở và câu luyện theo mẫu
     // Câu hỏi mở: không có ai_suggestion HOẶC là câu hỏi (kết thúc bằng ?)
     const isOpenQuestion = !currentDialogue.ai_suggestion || currentDialogue.en.trim().endsWith('?');
-
+    
     let result;
     if (isOpenQuestion && currentDialogue.en.includes('?')) {
       // Dùng EvaluateAnswer cho câu hỏi mở
@@ -55,16 +53,16 @@ const ConversationPractice = () => {
         audioBlob
       );
     }
-
+    
     if (result) {
       setAnalysisResult(result);
-
+      
       // Tính điểm trung bình để quyết định tự động next
-      const avgScore = result.overallScore ||
+      const avgScore = result.overallScore || 
         (result.pronunciationScore + result.fluencyScore + result.accuracyScore) / 3 ||
-        (result.contentScore + result.grammarScore + result.vocabularyScore +
-          result.pronunciationScore + result.fluencyScore) / 5;
-
+        (result.contentScore + result.grammarScore + result.vocabularyScore + 
+         result.pronunciationScore + result.fluencyScore) / 5;
+      
       // Nếu điểm >= 6, tự động chuyển sang câu tiếp sau 2 giây
       if (avgScore >= 6) {
         setTimeout(() => {
@@ -76,7 +74,7 @@ const ConversationPractice = () => {
 
   const handleNext = () => {
     if (!conversation) return;
-
+    
     if (currentDialogueIndex < conversation.dialogue.length - 1) {
       setCurrentDialogueIndex(prev => prev + 1);
       setAnalysisResult(null);
@@ -104,74 +102,63 @@ const ConversationPractice = () => {
 
   if (showSetup) {
     return (
-      <div className="min-h-screen bg-background p-6">
-        <div className="max-w-md mx-auto">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/")}
-            className="mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Quay lại
-          </Button>
-
-          <Card className="w-full p-8">
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-8 h-8 text-primary" />
-              </div>
-              <h1 className="text-2xl font-bold mb-2">Luyện nói tiếng Anh</h1>
-              <p className="text-muted-foreground">Chọn chủ đề và cấp độ để bắt đầu</p>
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <Card className="max-w-md w-full p-8">
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BookOpen className="w-8 h-8 text-primary" />
             </div>
+            <h1 className="text-2xl font-bold mb-2">Luyện nói tiếng Anh</h1>
+            <p className="text-muted-foreground">Chọn chủ đề và cấp độ để bắt đầu</p>
+          </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Chủ đề</label>
-                <select
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  className="w-full p-3 border rounded-md bg-background"
-                >
-                  <option value="Daily routine">Sinh hoạt hàng ngày</option>
-                  <option value="Job interview">Phỏng vấn việc làm</option>
-                  <option value="Travel">Du lịch</option>
-                  <option value="Shopping">Mua sắm</option>
-                  <option value="Restaurant">Nhà hàng</option>
-                  <option value="Weather">Thời tiết</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium mb-2 block">Cấp độ</label>
-                <select
-                  value={level}
-                  onChange={(e) => setLevel(Number(e.target.value))}
-                  className="w-full p-3 border rounded-md bg-background"
-                >
-                  <option value={1}>Sơ cấp (Elementary)</option>
-                  <option value={2}>Trung cấp (Intermediate)</option>
-                  <option value={3}>Cao cấp (Advanced)</option>
-                </select>
-              </div>
-
-              <Button
-                onClick={handleStartPractice}
-                disabled={isLoading}
-                className="w-full"
-                size="lg"
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Chủ đề</label>
+              <select
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                className="w-full p-3 border rounded-md bg-background"
               >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Đang tạo bài học...
-                  </>
-                ) : (
-                  "Bắt đầu luyện tập"
-                )}
-              </Button>
+                <option value="Daily routine">Sinh hoạt hàng ngày</option>
+                <option value="Job interview">Phỏng vấn việc làm</option>
+                <option value="Travel">Du lịch</option>
+                <option value="Shopping">Mua sắm</option>
+                <option value="Restaurant">Nhà hàng</option>
+                <option value="Weather">Thời tiết</option>
+              </select>
             </div>
-          </Card>
-        </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">Cấp độ</label>
+              <select
+                value={level}
+                onChange={(e) => setLevel(Number(e.target.value))}
+                className="w-full p-3 border rounded-md bg-background"
+              >
+                <option value={1}>Sơ cấp (Elementary)</option>
+                <option value={2}>Trung cấp (Intermediate)</option>
+                <option value={3}>Cao cấp (Advanced)</option>
+              </select>
+            </div>
+
+            <Button
+              onClick={handleStartPractice}
+              disabled={isLoading}
+              className="w-full"
+              size="lg"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Đang tạo bài học...
+                </>
+              ) : (
+                "Bắt đầu luyện tập"
+              )}
+            </Button>
+          </div>
+        </Card>
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToeicTestList } from "@/hooks/useToeicTestList";
-import { Clock, FileText, Target, Calendar, ArrowLeft } from "lucide-react";
+import { Clock, FileText, Target, Calendar } from "lucide-react";
 
 const ToeicTestList = () => {
   const navigate = useNavigate();
@@ -37,15 +37,6 @@ const ToeicTestList = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <Button
-        variant="ghost"
-        onClick={() => navigate("/")}
-        className="mb-4"
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Quay lại
-      </Button>
-      
       <div>
         <h1 className="text-4xl font-bold mb-2">Đề Thi TOEIC Reading</h1>
         <p className="text-muted-foreground">Chọn một đề thi để bắt đầu luyện tập</p>
