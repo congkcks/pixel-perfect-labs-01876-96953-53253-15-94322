@@ -7,14 +7,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-12">
-        {/* Login Notice */}
-        <div className="flex justify-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-            <CheckSquare className="w-5 h-5 text-primary" />
-            <span className="text-primary font-medium">Không cần đăng nhập - Sử dụng ngay!</span>
-          </div>
-        </div>
-
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
