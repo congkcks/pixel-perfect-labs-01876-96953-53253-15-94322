@@ -9,7 +9,7 @@ const Index = () => {
       <div className="container mx-auto px-6 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
             Nâng cao kỹ năng tiếng Anh với{" "}
             <span className="text-primary">UTC-EngLish</span>
           </h1>
