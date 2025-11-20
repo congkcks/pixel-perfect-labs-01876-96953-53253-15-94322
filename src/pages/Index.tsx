@@ -1,18 +1,56 @@
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Headphones, MessageCircle, Plus, BookOpen, FileText, BookMarked, BookText } from "lucide-react";
+import { Headphones, MessageCircle, Plus, BookOpen, FileText, BookMarked, BookText, CheckSquare } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple/10 via-primary/10 to-info/10">
+    <div className="min-h-screen bg-background">
+      {/* Header Navigation */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <span className="text-xl font-bold">UTC-EngLish</span>
+            </div>
+            <nav className="hidden md:flex items-center gap-8">
+              <Link to="/" className="text-foreground hover:text-primary transition-colors">
+                Trang chủ
+              </Link>
+              <Link to="/flashcard-groups" className="text-muted-foreground hover:text-primary transition-colors">
+                Khóa học
+              </Link>
+              <Link to="/test-list" className="text-muted-foreground hover:text-primary transition-colors">
+                Dashboard
+              </Link>
+              <Button variant="ghost" className="text-muted-foreground hover:text-primary">
+                Đăng nhập
+              </Button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
       <div className="container mx-auto px-6 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-info to-primary bg-clip-text text-transparent animate-fade-in">
-            Phần luyện tập kĩ năng
+        {/* Login Notice */}
+        <div className="flex justify-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+            <CheckSquare className="w-5 h-5 text-primary" />
+            <span className="text-primary font-medium">Không cần đăng nhập - Sử dụng ngay!</span>
+          </div>
+        </div>
+
+        {/* Hero Section */}
+        <div className="text-center mb-16 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            Nâng cao kỹ năng tiếng Anh với{" "}
+            <span className="text-primary">UTC-EngLish</span>
           </h1>
-          <p className="text-xl text-muted-foreground">
-            Nâng cao kỹ năng ngôn ngữ của bạn với AI
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Công cụ học tiếng Anh thông minh giúp bạn tra từ, tạo bài tập và luyện tập với AI chỉ trong một nền tảng
           </p>
         </div>
 
@@ -131,7 +169,7 @@ const Index = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <Card className="inline-block p-8 bg-gradient-to-r from-primary/10 to-purple/10">
+          <Card className="inline-block p-8 bg-card border-border">
             <h3 className="text-2xl font-bold mb-4">✨ Tính năng nổi bật</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               <div>
