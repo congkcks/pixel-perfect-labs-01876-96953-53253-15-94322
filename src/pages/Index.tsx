@@ -6,34 +6,6 @@ import { Headphones, MessageCircle, Plus, BookOpen, FileText, BookMarked, BookTe
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header Navigation */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold">UTC-EngLish</span>
-            </div>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link to="/" className="text-foreground hover:text-primary transition-colors">
-                Trang chủ
-              </Link>
-              <Link to="/flashcard-groups" className="text-muted-foreground hover:text-primary transition-colors">
-                Khóa học
-              </Link>
-              <Link to="/test-list" className="text-muted-foreground hover:text-primary transition-colors">
-                Dashboard
-              </Link>
-              <Button variant="ghost" className="text-muted-foreground hover:text-primary">
-                Đăng nhập
-              </Button>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-6 py-12">
         {/* Login Notice */}
         <div className="flex justify-center mb-8 animate-fade-in">
