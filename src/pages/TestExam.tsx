@@ -15,7 +15,6 @@ const TestExam = () => {
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
-  const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
   const [timeLeft, setTimeLeft] = useState(7200); // 120 phút = 7200 giây
   const [showInstructions, setShowInstructions] = useState(true);
 
@@ -140,9 +139,13 @@ const TestExam = () => {
             <Card className="p-6">
               <h2 className="text-xl font-bold mb-4">Câu {currentQuestionIndex + 1}</h2>
               
-              {currentQuestion.questionType && (
-                <div className="mb-4 p-3 bg-primary/10 rounded-lg">
-                  <p className="font-semibold text-sm">{currentQuestion.questionType.trim()}</p>
+              <div className="mb-4 p-3 bg-primary/10 rounded-lg">
+                <p className="font-semibold text-sm">Part {currentQuestion.part}</p>
+              </div>
+
+              {currentQuestion.passageText && (
+                <div className="mb-4 p-4 bg-accent/30 rounded-lg">
+                  <p className="text-sm whitespace-pre-line">{currentQuestion.passageText}</p>
                 </div>
               )}
 
@@ -217,65 +220,31 @@ const TestExam = () => {
                     ...userAnswers,
                     [currentQuestion.questionId]: value,
                   });
-                  setShowExplanation({
-                    ...showExplanation,
-                    [currentQuestion.questionId]: true,
-                  });
                 }}
                 className="space-y-4"
               >
-                {["A", "B", "C", "D"].map((option) => {
-                  const isSelected = userAnswers[currentQuestion.questionId] === option;
-                  const isCorrect = currentQuestion.correctAnswerLabel === option;
-                  const shouldShowResult = showExplanation[currentQuestion.questionId];
-                  
-                  let borderColor = "border-border";
-                  let bgColor = "";
-                  
-                  if (shouldShowResult) {
-                    if (isSelected && isCorrect) {
-                      borderColor = "border-success";
-                      bgColor = "bg-success/10";
-                    } else if (isSelected && !isCorrect) {
-                      borderColor = "border-destructive";
-                      bgColor = "bg-destructive/10";
-                    } else if (isCorrect) {
-                      borderColor = "border-success";
-                      bgColor = "bg-success/5";
-                    }
-                  }
+                {currentQuestion.options.map((option) => {
+                  const isSelected = userAnswers[currentQuestion.questionId] === option.label;
                   
                   return (
                     <div
-                      key={option}
-                      className={`flex items-center space-x-3 p-4 border-2 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer ${borderColor} ${bgColor}`}
+                      key={option.label}
+                      className={`flex items-center space-x-3 p-4 border-2 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer ${
+                        isSelected ? 'border-primary bg-primary/10' : 'border-border'
+                      }`}
                     >
-                      <RadioGroupItem value={option} id={`option-${option}`} />
+                      <RadioGroupItem value={option.label} id={`option-${option.label}`} />
                       <Label
-                        htmlFor={`option-${option}`}
+                        htmlFor={`option-${option.label}`}
                         className="text-lg font-medium cursor-pointer flex-1"
                       >
-                        {option}
+                        {option.label}
+                        {option.text && `. ${option.text}`}
                       </Label>
-                      {shouldShowResult && isCorrect && (
-                        <span className="text-success font-semibold text-sm">✓ Đúng</span>
-                      )}
-                      {shouldShowResult && isSelected && !isCorrect && (
-                        <span className="text-destructive font-semibold text-sm">✗ Sai</span>
-                      )}
                     </div>
                   );
                 })}
               </RadioGroup>
-
-              {showExplanation[currentQuestion.questionId] && (
-                <div className="mt-6 p-4 bg-accent/30 rounded-lg border-l-4 border-primary">
-                  <h4 className="font-semibold mb-2 text-primary">Giải thích đáp án:</h4>
-                  <div className="text-sm space-y-2 whitespace-pre-line">
-                    {currentQuestion.answerExplanation}
-                  </div>
-                </div>
-              )}
             </Card>
           </div>
         </div>

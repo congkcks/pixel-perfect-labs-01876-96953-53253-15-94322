@@ -44,8 +44,8 @@ const TestConfiguration = () => {
     );
   }
 
-  const questionCount = testDetail?.questions.length || 0;
-  const estimatedTime = Math.ceil(questionCount * 0.6); // ~0.6 phút/câu
+  const duration = testDetail?.duration || 0;
+  const totalQuestions = testDetail?.totalQuestions || 0;
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -70,7 +70,7 @@ const TestConfiguration = () => {
               <div>
                 <h1 className="text-3xl font-bold mb-2">{testDetail?.title}</h1>
                 <p className="text-muted-foreground">
-                  {estimatedTime} phút - {questionCount} câu
+                  {duration} phút - {totalQuestions} câu
                 </p>
               </div>
             </div>
