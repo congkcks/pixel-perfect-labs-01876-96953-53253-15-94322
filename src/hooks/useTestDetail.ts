@@ -10,6 +10,8 @@ export interface TestQuestion {
   questionNumber: number;
   part: number;
   questionText: string | null;
+  correctAnswer: string;
+  explanation: string;
   audioUrl: string | null;
   imageUrl: string | null;
   passageText: string | null;
