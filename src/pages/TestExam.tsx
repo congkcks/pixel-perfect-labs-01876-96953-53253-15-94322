@@ -17,6 +17,7 @@ const TestExam = () => {
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [timeLeft, setTimeLeft] = useState(7200); // 120 phút = 7200 giây
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     if (!showInstructions) {
@@ -220,31 +221,80 @@ const TestExam = () => {
                     ...userAnswers,
                     [currentQuestion.questionId]: value,
                   });
+                  setShowExplanation({
+                    ...showExplanation,
+                    [currentQuestion.questionId]: true,
+                  });
                 }}
                 className="space-y-4"
               >
-                {currentQuestion.options.map((option) => {
-                  const isSelected = userAnswers[currentQuestion.questionId] === option.label;
+                {(() => {
+                  const options = currentQuestion.options.length > 0 
+                    ? currentQuestion.options 
+                    : [
+                        { label: 'A', text: null },
+                        { label: 'B', text: null },
+                        { label: 'C', text: null },
+                        { label: 'D', text: null }
+                      ];
                   
-                  return (
-                    <div
-                      key={option.label}
-                      className={`flex items-center space-x-3 p-4 border-2 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer ${
-                        isSelected ? 'border-primary bg-primary/10' : 'border-border'
-                      }`}
-                    >
-                      <RadioGroupItem value={option.label} id={`option-${option.label}`} />
-                      <Label
-                        htmlFor={`option-${option.label}`}
-                        className="text-lg font-medium cursor-pointer flex-1"
+                  return options.map((option) => {
+                    const isSelected = userAnswers[currentQuestion.questionId] === option.label;
+                    const isCorrect = option.label === currentQuestion.correctAnswer;
+                    const isAnswered = showExplanation[currentQuestion.questionId];
+                    
+                    let borderColor = 'border-border';
+                    let bgColor = '';
+                    
+                    if (isAnswered) {
+                      if (isCorrect) {
+                        borderColor = 'border-green-500';
+                        bgColor = 'bg-green-50 dark:bg-green-950/30';
+                      } else if (isSelected && !isCorrect) {
+                        borderColor = 'border-red-500';
+                        bgColor = 'bg-red-50 dark:bg-red-950/30';
+                      }
+                    } else if (isSelected) {
+                      borderColor = 'border-primary';
+                      bgColor = 'bg-primary/10';
+                    }
+                    
+                    return (
+                      <div
+                        key={option.label}
+                        className={`flex items-center space-x-3 p-4 border-2 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer ${borderColor} ${bgColor}`}
                       >
-                        {option.label}
-                        {option.text && `. ${option.text}`}
-                      </Label>
-                    </div>
-                  );
-                })}
+                        <RadioGroupItem value={option.label} id={`option-${option.label}`} />
+                        <Label
+                          htmlFor={`option-${option.label}`}
+                          className="text-lg font-medium cursor-pointer flex-1"
+                        >
+                          {option.label}
+                          {option.text && `. ${option.text}`}
+                        </Label>
+                        {isAnswered && isCorrect && (
+                          <span className="text-green-600 dark:text-green-400 font-semibold">✓</span>
+                        )}
+                        {isAnswered && isSelected && !isCorrect && (
+                          <span className="text-red-600 dark:text-red-400 font-semibold">✗</span>
+                        )}
+                      </div>
+                    );
+                  });
+                })()}
               </RadioGroup>
+
+              {/* Explanation */}
+              {showExplanation[currentQuestion.questionId] && (
+                <div className="mt-6 p-4 bg-muted rounded-lg border">
+                  <h4 className="font-semibold mb-2 text-primary">
+                    Đáp án đúng: {currentQuestion.correctAnswer}
+                  </h4>
+                  <div className="text-sm whitespace-pre-line leading-relaxed">
+                    {currentQuestion.explanation}
+                  </div>
+                </div>
+              )}
             </Card>
           </div>
         </div>
