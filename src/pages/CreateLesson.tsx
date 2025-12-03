@@ -22,6 +22,7 @@ const CreateLesson = () => {
   const [purpose, setPurpose] = useState("communication");
   const [method, setMethod] = useState("ai");
   const [topic, setTopic] = useState("");
+  const [topicMode, setTopicMode] = useState<"preset" | "custom">("preset");
   const [manualContent, setManualContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -140,12 +141,55 @@ const CreateLesson = () => {
               <label className="flex items-center gap-2 font-semibold mb-2 text-sm">
                 📚 Chủ đề
               </label>
-              <Textarea
-                placeholder="Nhập chủ đề của bạn... (ví dụ: The Importance of Learning English, My favorite place to relax)"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                className="min-h-[80px]"
-              />
+              
+              {/* Topic input mode toggle */}
+              <RadioGroup value={topicMode} onValueChange={(val) => setTopicMode(val as "preset" | "custom")} className="grid grid-cols-2 gap-2 mb-3">
+                <div>
+                  <RadioGroupItem value="preset" id="preset" className="peer sr-only" />
+                  <Label
+                    htmlFor="preset"
+                    className="flex items-center justify-center gap-2 rounded-lg border-2 border-muted bg-popover p-2 text-sm hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 cursor-pointer"
+                  >
+                    📋 Chọn chủ đề có sẵn
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem value="custom" id="custom" className="peer sr-only" />
+                  <Label
+                    htmlFor="custom"
+                    className="flex items-center justify-center gap-2 rounded-lg border-2 border-muted bg-popover p-2 text-sm hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 cursor-pointer"
+                  >
+                    ✏️ Tự nhập chủ đề
+                  </Label>
+                </div>
+              </RadioGroup>
+
+              {topicMode === "preset" ? (
+                <Select value={topic} onValueChange={setTopic}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Chọn một chủ đề..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="The Importance of Learning English">🌍 The Importance of Learning English</SelectItem>
+                    <SelectItem value="My Favorite Place to Relax">🏖️ My Favorite Place to Relax</SelectItem>
+                    <SelectItem value="Benefits of Reading Books">📚 Benefits of Reading Books</SelectItem>
+                    <SelectItem value="Technology in Modern Life">💻 Technology in Modern Life</SelectItem>
+                    <SelectItem value="Environmental Protection">🌱 Environmental Protection</SelectItem>
+                    <SelectItem value="The Value of Friendship">🤝 The Value of Friendship</SelectItem>
+                    <SelectItem value="My Dream Job">💼 My Dream Job</SelectItem>
+                    <SelectItem value="Healthy Lifestyle Habits">🏃 Healthy Lifestyle Habits</SelectItem>
+                    <SelectItem value="Travel and Cultural Exchange">✈️ Travel and Cultural Exchange</SelectItem>
+                    <SelectItem value="The Role of Social Media">📱 The Role of Social Media</SelectItem>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Textarea
+                  placeholder="Nhập chủ đề của bạn... (ví dụ: My childhood memories, The future of education)"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  className="min-h-[80px]"
+                />
+              )}
             </div>
           )}
 
