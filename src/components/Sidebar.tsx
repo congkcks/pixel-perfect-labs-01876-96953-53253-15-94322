@@ -1,16 +1,25 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, TrendingUp, Headphones, FileText, BookMarked, User, BookText, ClipboardList } from "lucide-react";
+import { BookOpen, TrendingUp, Headphones, FileText, BookMarked, User, BookText, ClipboardList, MessageCircle, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+interface MenuItem {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  path: string;
+  external?: boolean;
+}
 
 const Sidebar = () => {
   const location = useLocation();
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { icon: FileText, label: "BÀI VIẾT", path: "/create-lesson" },
     { icon: Headphones, label: "BÀI NGHE", path: "/listening-practice" },
+    { icon: Video, label: "NGHE VIDEO", path: "https://congkcks.github.io/listen-learn-english/", external: true },
     { icon: BookText, label: "LUYỆN ĐỌC", path: "/reading-config" },
     { icon: ClipboardList, label: "ĐỀ THI TOEIC", path: "/toeic-tests" },
-    { icon: BookMarked, label: "TỪ VỰNG", path: "/flashcard-groups" },
+    { icon: BookMarked, label: "TỪ VỰNG", path: "https://congkcks.github.io/flashcard-master-96/#/", external: true },
+    { icon: MessageCircle, label: "HỘI THOẠI", path: "https://congkcks.github.io/convo-speak/#/topics", external: true },
     { icon: BookOpen, label: "NGỮ PHÁP", path: "/grammar-practice" },
     { icon: TrendingUp, label: "LUYỆN ĐỀ", path: "/test-list" },
     { icon: User, label: "HỒ SƠ", path: "/profile" },
@@ -33,6 +42,21 @@ const Sidebar = () => {
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
+          
+          if (item.external) {
+            return (
+              <a
+                key={item.path}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-sm">{item.label}</span>
+              </a>
+            );
+          }
           
           return (
             <Link
